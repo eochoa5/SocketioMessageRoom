@@ -1,0 +1,101 @@
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+	<link rel="stylesheet" media="screen and (max-width: 500px)" href="stylesheets/small.css">
+	<link rel="stylesheet" media="screen and (min-width: 551px)" href="stylesheets/large.css">
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" ></script>
+ <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+ <script type="text/javascript">
+ $(function(){
+		if(localStorage.username != null){
+				 $('#userFormContainer').hide();	
+			}
+	});
+ 	
+ </script>
+
+	<title>Messaging App</title>
+
+
+</head>
+
+<body>
+	<div id="container">
+		<div id="userFormContainer" class="row">
+			
+				<form id="userForm">
+					<div class="form-group">
+						<label >Pick username to enter message room</label>
+						<input class="form-control" id="username" placeholder="username"></input>
+					</div>
+					<input type="submit" class="btn btn-primary" value="Enter" />
+				</form>
+			
+		</div>
+
+		<div id="initiallyHiddenContent" style="display:none;">
+		<button id="menuButton" onclick="displayMenu()"><span id="menuButtonText">|||</span></button>
+			<div id="usersContainer">
+					<div class="well">
+					<span style="float: middle; cursor: pointer;" onclick="logout()"><b><u>Logout</u></b></span>
+						<h3>Online users</h3>
+						<ul class="list-group" id="users"></ul>
+					</div>
+			</div>
+			<div id="messagesContainer">
+					<div class="well" id="listofMessages">
+						<b>Inbox</b><br><br>
+						<ul class="list-group" id="messages"></ul>
+					</div>
+			</div>
+			<div id="msgNotifications">
+			<b><u>Messages</u></b>
+			<div id="newMsgTotal" onclick="$('#newMsgTotalNumber').html('0').hide()"><span id="newMsgTotalNumber" style="display:none">0</span></div>
+			</div>
+
+				<form id="messageForm">
+					<label>To: </label>
+					<select id="selectUsers"></select>
+					<textarea class="form-control" id="message" style="resize: none;"></textarea>
+					<input type="submit" class="btn btn-primary"  value="Send" />
+				</form>
+				
+		</div>
+
+
+
+	</div>
+	<script type="text/javascript">
+		function logout(){
+			localStorage.removeItem('username');
+			location.assign("http://eochoa5.herokuapp.com/");
+
+		}
+		function displayMenu(){
+			if($('#menuButtonText').html() == "X"){
+				$('#menuButtonText').html('|||');
+				$('#menuButton').css( {'transform': 'rotate(90deg)'});
+				$('#usersContainer').animate({
+       					 height:'0%',	
+   						 }, 800, function(){$('#usersContainer').hide()} );
+			}
+			else{
+				$('#menuButtonText').html('X');
+				$('#menuButton').css( {'transform': 'rotate(180deg)'});
+				   $('#usersContainer').show().animate({
+       					 height:'40%'
+        					
+   						 }, 800 );
+
+			}
+			
+
+		}
+	</script>
+	<script src="js/chat.js"></script>
+	
+</body>
+
+</html>
